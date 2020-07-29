@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local');
 const User = require('../models/User').model;
 const invalidCredentialsMessage = 'Invalid credentials';
 const bcrypt = require('bcrypt');
+const Role = require('../models/Role').model;
 
 passport.use(new LocalStrategy({
     usernameField: 'email',
@@ -47,6 +48,7 @@ passport.deserializeUser((id, done) => {
        where: {
            id,
        },
+       include: Role,
    }).then(user => {
        return done(null, user);
    }).catch(error => {

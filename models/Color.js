@@ -41,3 +41,4 @@ Color.init(attributes, {
 });
 
 module.exports.attributes = attributes;
+module.exports.model = Color;

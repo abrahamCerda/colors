@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('../config/passport-config');
+const passport = require('passport');
 
 /*
  CUSTOM PASSPORT LOCAL VERIFY CALLBACK IN ORDER TO DEMONSTRATE THE EXPERIENCE

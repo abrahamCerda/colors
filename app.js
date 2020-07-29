@@ -19,6 +19,7 @@ const passport = require('./config/passport-config');
 const indexRouter = require('./controllers/index');
 const usersRouter = require('./controllers/users');
 const authRouter = require('./controllers/auth');
+const colorsRouter = require('./controllers/colors');
 
 const app = express();
 
@@ -45,5 +46,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+app.use('/colors', colorsRouter);
 
 module.exports = app;
