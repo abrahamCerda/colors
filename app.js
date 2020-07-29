@@ -9,23 +9,41 @@ database.authenticate()
         console.error('DATABASE CONNECTION ERROR', error);
         process.exit();
     });
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const passport = require('./config/passport-config');
 
-var indexRouter = require('./controllers/index');
-var usersRouter = require('./controllers/users');
+const indexRouter = require('./controllers/index');
+const usersRouter = require('./controllers/users');
+const authRouter = require('./controllers/auth');
 
-var app = express();
+const app = express();
+
+const sessionStore = new SequelizeStore({
+    db: database,
+});
 
 app.use(logger('dev'));
 app.use(express.json());
+
+app.use(session({
+    secret: process.env.SECRET,
+    store: sessionStore,
+    resave: false,
+    proxy: true,
+}));
+sessionStore.sync();
+
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/auth', authRouter);
 
 module.exports = app;
