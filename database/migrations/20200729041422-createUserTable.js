@@ -21,6 +21,18 @@ module.exports = {
         key: 'id',
       },
     };
+    attributes['created_at'] = {
+      type: Sequelize.DataTypes.DATE,
+      allowNull: false,
+    }
+    attributes['updated_at'] = {
+      type: Sequelize.DataTypes.DATE,
+      allowNull: false,
+    }
+    attributes['deleted_at'] = {
+      type: Sequelize.DataTypes.DATE,
+      allowNull: true
+    }
 
     /* ES8 async/await*/
     try{

@@ -31,8 +31,13 @@ const attributes = {
 
 Color.init(attributes, {
     sequelize: database,
-    modelName: 'Color',
+    modelName: 'color',
     tableName: 'color',
+    paranoid: true,
+    timestamps: true,
+    deletedAt: 'deleted_at',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
 });
 
 module.exports.attributes = attributes;

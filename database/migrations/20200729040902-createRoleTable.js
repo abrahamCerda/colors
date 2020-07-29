@@ -10,6 +10,19 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
+    attributes['created_at'] = {
+      type: Sequelize.DataTypes.DATE,
+      allowNull: false,
+    }
+    attributes['updated_at'] = {
+      type: Sequelize.DataTypes.DATE,
+      allowNull: false,
+    }
+    attributes['deleted_at'] = {
+      type: Sequelize.DataTypes.DATE,
+      allowNull: true
+    }
+
     queryInterface.createTable('role', attributes)
         .then(() => {
       console.log('CREATE role TABLE MIGRATION APPLIED SUCCESSFULLY');

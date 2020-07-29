@@ -24,13 +24,23 @@ const attributes = {
 
 Role.init(attributes, {
     sequelize: database,
-    modelName: 'Role',
+    modelName: 'role',
     tableName: 'role',
+    paranoid: true,
+    timestamps: true,
+    deletedAt: 'deleted_at',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
 });
 
 Role.hasMany(User, {
     foreignKey: 'role_id',
+    sourceKey: 'id',
 });
-User.belongsTo(Role);
+User.belongsTo(Role, {
+    foreignKey: 'role_id',
+    sourceKey: 'id',
+});
 
 module.exports.attributes = attributes;
+module.exports.model = Role;

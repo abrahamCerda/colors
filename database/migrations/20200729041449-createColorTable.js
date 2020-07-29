@@ -10,6 +10,19 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
+    attributes['created_at'] = {
+      type: Sequelize.DataTypes.DATE,
+      allowNull: false,
+    }
+    attributes['updated_at'] = {
+      type: Sequelize.DataTypes.DATE,
+      allowNull: false,
+    }
+    attributes['deleted_at'] = {
+      type: Sequelize.DataTypes.DATE,
+      allowNull: true
+    }
+
     try{
       await queryInterface.createTable('color', attributes);
       console.log("CREATE color TABLE MIGRATION APPLIED SUCCESSFULLY");

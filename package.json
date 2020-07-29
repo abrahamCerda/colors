@@ -5,10 +5,13 @@
   "scripts": {
     "db:migrate": "sequelize-cli db:migrate",
     "db:undo-migrations": "sequelize-cli db:migrate:undo:all",
+    "db:seed": "sequelize-cli db:seed:all",
+    "db:undo-seed": "sequelize-cli db:seed:undo:all",
     "start:debug": "DEBUG=colors:* npm start",
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
