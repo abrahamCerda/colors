@@ -1,5 +1,5 @@
 require('dotenv').config();
-const database = require('./database.js');
+const database = require('./database/database.js');
 database.authenticate().then(() => {
     console.log("DATABASE CONNECTED");
 })
