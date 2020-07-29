@@ -1,10 +1,19 @@
+require('dotenv').config();
+const database = require('./database.js');
+database.authenticate().then(() => {
+    console.log("DATABASE CONNECTED");
+})
+    .catch(error => {
+        console.error('DATABASE CONNECTION ERROR', error);
+        process.exit();
+    });
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var indexRouter = require('./controllers/index');
+var usersRouter = require('./controllers/users');
 
 var app = express();
 
