@@ -1,8 +1,10 @@
 require('dotenv').config();
 const database = require('./database/database.js');
-database.authenticate().then(() => {
+// TEST DATABASE CONNECTION
+database.authenticate()
+    .then(() => {
     console.log("DATABASE CONNECTED");
-})
+    })
     .catch(error => {
         console.error('DATABASE CONNECTION ERROR', error);
         process.exit();

@@ -1,7 +1,7 @@
-const {DataTypes, Model} = require("sequelize");
+const {DataTypes, Model} = require('sequelize');
 const database = require('../database/database');
 
-class User extends Model {}
+class Color extends Model{}
 
 const attributes = {
     id: {
@@ -10,21 +10,29 @@ const attributes = {
         primaryKey: true,
         allowNull: false,
     },
-    email: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
     },
-    password: {
+    color: {
         type: DataTypes.STRING,
         allowNull: false,
-    }
+    },
+    pantone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    year: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
 };
 
-User.init(attributes, {
+Color.init(attributes, {
     sequelize: database,
-    modelName: 'User',
-    tableName: 'user',
+    modelName: 'Color',
+    tableName: 'color',
 });
-module.exports.model = User;
+
 module.exports.attributes = attributes;

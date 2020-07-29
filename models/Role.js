@@ -1,7 +1,8 @@
-const {DataTypes, Model} = require("sequelize");
-const database = require('../database/database');
+const {DataTypes, Model} = require('sequelize');
+const User = require('./User').model;
+const database = require('../database/database')
 
-class User extends Model {}
+class Role extends Model {}
 
 const attributes = {
     id: {
@@ -10,21 +11,26 @@ const attributes = {
         primaryKey: true,
         allowNull: false,
     },
-    email: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
     },
-    password: {
+    alias: {
         type: DataTypes.STRING,
         allowNull: false,
     }
 };
 
-User.init(attributes, {
+Role.init(attributes, {
     sequelize: database,
-    modelName: 'User',
-    tableName: 'user',
+    modelName: 'Role',
+    tableName: 'role',
 });
-module.exports.model = User;
+
+Role.hasMany(User, {
+    foreignKey: 'role_id',
+});
+User.belongsTo(Role);
+
 module.exports.attributes = attributes;

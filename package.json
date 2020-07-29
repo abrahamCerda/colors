@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "db:migrate": "sequelize-cli db:migrate",
+    "db:undo-migrations": "sequelize-cli db:migrate:undo:all",
     "start:debug": "DEBUG=colors:* npm start",
     "start": "node ./bin/www"
   },
@@ -15,5 +17,8 @@
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.3"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
   }
 }
