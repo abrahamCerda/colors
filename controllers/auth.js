@@ -1,33 +1,32 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
-/*
- CUSTOM PASSPORT LOCAL VERIFY CALLBACK IN ORDER TO DEMONSTRATE THE EXPERIENCE
- WITH PASSPORT AND EXPRESS SESSION
-
-router.post('/login', (req, res, next) => {
-    passport.authenticate('local', (error, user, info) => {
-        if(info){
-            return res.status(401).json({message: info.message});
-        }
-        if(error){
-            return next(error);
-        }
-       req.login(user, (error) => {
-           if(error){
-               return next(error);
-           }
-           return res.send(user);
-       });
-    })(req,res,next);
-});*/
 router.post('/login',
-    passport.authenticate('local'),
+    passport.authenticate('local', {session: false}),
     function(req, res) {
         // If this function gets called, authentication was successful.
         // `req.user` contains the authenticated user.
-        res.json(req.user);
+        /* Token generation*/
+        const payload = {
+            sub: req.user.id,
+            username: req.user.email,
+            iat: Date.now() + (parseInt(process.env.JWT_EXPIRATION) * 1000),
+        };
+        const access_token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRATION
+        });
+        const result = {
+            access_token,
+            id: req.user.id,
+            email: req.user.email,
+            role: {
+                id: req.user.role.id,
+                name: req.user.role.name,
+            },
+        };
+        return res.json(result);
     });
 module.exports = router;
 

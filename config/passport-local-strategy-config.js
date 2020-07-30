@@ -7,12 +7,15 @@ const Role = require('../models/Role').model;
 
 passport.use(new LocalStrategy({
     usernameField: 'email',
+    passwordField: 'password',
+    session: false,
     },
     (username, password, done) => {
         User.findOne({
             where:{
                 email: username,
             },
+            include: Role
         }).then(user => {
             if(!user){
                 console.warn(`user ${username} not found`);
@@ -38,23 +41,5 @@ passport.use(new LocalStrategy({
         });
     }
 ));
-
-passport.serializeUser((user, done) => {
-   done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-   User.findOne({
-       where: {
-           id,
-       },
-       include: Role,
-   }).then(user => {
-       return done(null, user);
-   }).catch(error => {
-       console.error("ERROR WHILE TRYING TO DESERIALIZE USER", error);
-       return done(error);
-   });
-});
 
 module.exports = passport;
