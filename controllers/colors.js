@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const hasRole = require('../middlewares/role-middleware');
 const Color = require('../models/Color').model;
+const passport = require('passport');
+
+router.use(passport.authenticate('jwt', { session: false }));
 
 router.get('/', (req, res, next) => {
     hasRole(req,res,next,['administrator', 'user']);

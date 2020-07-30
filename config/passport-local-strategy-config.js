@@ -1,14 +1,13 @@
-const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('../models/User').model;
 const invalidCredentialsMessage = 'Invalid credentials';
 const bcrypt = require('bcrypt');
 const Role = require('../models/Role').model;
 
-passport.use(new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password',
-    session: false,
+const localStrategy = new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'password',
+        session: false,
     },
     (username, password, done) => {
         User.findOne({
@@ -40,6 +39,6 @@ passport.use(new LocalStrategy({
             return done(error);
         });
     }
-));
+);
 
-module.exports = passport;
+module.exports = localStrategy;

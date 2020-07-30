@@ -2,13 +2,12 @@ const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require('../models/User').model;
 const Role = require('../models/Role').model;
-const passport = require('passport');
 
 const options = {}
 options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 options.secretOrKey = process.env.JWT_SECRET;
 
-passport.use(new JwtStrategy(options, (jwtPayload, done) => {
+const jwtStrategy = new JwtStrategy(options, (jwtPayload, done) => {
     User.findOne({
         where: {
             id: jwtPayload.sub,
@@ -29,6 +28,6 @@ passport.use(new JwtStrategy(options, (jwtPayload, done) => {
         console.error('ERROR WHILE TRYING TO FIND THE USER IN JWT PAYLOAD VALIDATION', error);
         return done(error);
     })
-}));
+});
 
-module.exports = passport;
+module.exports = jwtStrategy;
