@@ -15,6 +15,7 @@ const logger = require('morgan');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const passport = require('./config/passport-config');
+const cors = require('cors');
 
 const indexRouter = require('./controllers/index');
 const usersRouter = require('./controllers/users');
@@ -29,6 +30,7 @@ const sessionStore = new SequelizeStore({
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(cors());
 
 app.use(session({
     secret: process.env.SECRET,

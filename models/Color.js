@@ -29,7 +29,19 @@ const attributes = {
     },
 };
 
-Color.init(attributes, {
+const modelAttributes = Object.assign({}, attributes);
+modelAttributes['name']['isAlphanumeric'] = true;
+modelAttributes['name']['notNull'] = true;
+modelAttributes['name']['notEmpty'] = true;
+modelAttributes['color']['notNull'] = true;
+modelAttributes['color']['notEmpty'] = true;
+modelAttributes['pantone']['notNull'] = true;
+modelAttributes['pantone']['notEmpty'] = true;
+modelAttributes['year']['isInt'] = true;
+modelAttributes['year']['notNull'] = true;
+modelAttributes['year']['not'] = ['0'];
+
+Color.init(modelAttributes, {
     sequelize: database,
     modelName: 'color',
     tableName: 'color',
