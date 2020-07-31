@@ -27,10 +27,17 @@ router.get('/', (req, res, next) => {
 }, (req, res) => {
     /* Apply pagination*/
     const { page, pageSize} = req.query;
+    const order = req.query.order && (req.query.order.toUpperCase() === 'ASC' || req.query.order.toUpperCase() === 'DESC') ?
+        req.query.order.toUpperCase() : 'ASC';
     const { limit, offset } = getPagination(page, pageSize);
     Color.findAndCountAll({
         limit,
-        offset
+        offset,
+        order: [
+            [
+                'created_at', order,
+            ]
+        ]
     })
         .then(colors => {
             const paginatedColors = getPagingData(colors, page, limit)
