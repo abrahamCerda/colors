@@ -3,6 +3,7 @@ const router = express.Router();
 const hasRole = require('../middlewares/role-middleware');
 const Color = require('../models/Color').model;
 const passport = require('passport');
+const js2xmlparser = require('js2xmlparser');
 
 router.use(passport.authenticate('jwt', { session: false }));
 
@@ -41,7 +42,14 @@ router.get('/', (req, res, next) => {
     })
         .then(colors => {
             const paginatedColors = getPagingData(colors, page, limit)
-            return res.json(paginatedColors);
+            res.format({
+                json: () => {
+                    return res.json(paginatedColors);
+                },
+                xml: () => {
+                    return res.send(js2xmlparser.parse('data', paginatedColors));
+                }
+            });
         })
         .catch(error => {
             console.error(error);
