@@ -6,13 +6,35 @@ const passport = require('passport');
 
 router.use(passport.authenticate('jwt', { session: false }));
 
+const DEFAULT_PAGE_SIZE = 6;
+const DEFAULT_PAGE_INDEX = 0;
+
+const getPagination = (page, pageSize) => {
+    const limit = pageSize ? +pageSize : DEFAULT_PAGE_SIZE;
+    const offset = page ? page * limit : DEFAULT_PAGE_INDEX;
+    return { limit, offset };
+};
+
+const getPagingData = (data, page, limit) => {
+    const { count: totalColors, rows: colors } = data;
+    const currentPage = page ? +page : DEFAULT_PAGE_INDEX;
+    const totalPages = Math.ceil(totalColors / limit);
+    return { totalColors, colors, totalPages, currentPage };
+};
+
 router.get('/', (req, res, next) => {
     hasRole(req,res,next,['administrator', 'user']);
 }, (req, res) => {
     /* Apply pagination*/
-    Color.findAll()
+    const { page, pageSize} = req.query;
+    const { limit, offset } = getPagination(page, pageSize);
+    Color.findAndCountAll({
+        limit,
+        offset
+    })
         .then(colors => {
-            return res.json(colors);
+            const paginatedColors = getPagingData(colors, page, limit)
+            return res.json(paginatedColors);
         })
         .catch(error => {
             console.error(error);
