@@ -7,6 +7,7 @@ const localStrategy = require('./config/passport-local-strategy-config');
 const jwtStrategy = require('./config/passport-jwt-strategy-config');
 const passport = require('passport');
 const cors = require('cors');
+const sanitizeParams = require('./middlewares/sanitizer-middleware');
 
 const indexRouter = require('./controllers/index');
 const usersRouter = require('./controllers/users');
@@ -16,6 +17,7 @@ const colorsRouter = require('./controllers/colors');
 const app = express();
 
 app.use(logger('dev'));
+app.use(sanitizeParams);
 app.use(express.json());
 app.use(cors());
 
