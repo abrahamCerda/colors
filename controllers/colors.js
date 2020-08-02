@@ -4,24 +4,10 @@ const hasRole = require('../middlewares/role-middleware');
 const Color = require('../models/Color').model;
 const passport = require('passport');
 const js2xmlparser = require('js2xmlparser');
+const ColorsService = require('../services/colors-service');
+const colorsService = new ColorsService();
 
 router.use(passport.authenticate('jwt', { session: false }));
-
-const DEFAULT_PAGE_SIZE = 6;
-const DEFAULT_PAGE_INDEX = 0;
-
-const getPagination = (page, pageSize) => {
-    const limit = pageSize ? +pageSize : DEFAULT_PAGE_SIZE;
-    const offset = page ? page * limit : DEFAULT_PAGE_INDEX;
-    return { limit, offset };
-};
-
-const getPagingData = (data, page, limit) => {
-    const { count: totalColors, rows: colors } = data;
-    const currentPage = page ? +page : DEFAULT_PAGE_INDEX;
-    const totalPages = Math.ceil(totalColors / limit);
-    return { totalColors, colors, totalPages, currentPage };
-};
 
 router.get('/', (req, res, next) => {
     hasRole(req,res,next,['administrator', 'user']);
@@ -30,18 +16,8 @@ router.get('/', (req, res, next) => {
     const { page, pageSize} = req.query;
     const order = req.query.order && (req.query.order.toUpperCase() === 'ASC' || req.query.order.toUpperCase() === 'DESC') ?
         req.query.order.toUpperCase() : 'ASC';
-    const { limit, offset } = getPagination(page, pageSize);
-    Color.findAndCountAll({
-        limit,
-        offset,
-        order: [
-            [
-                'created_at', order,
-            ]
-        ]
-    })
-        .then(colors => {
-            const paginatedColors = getPagingData(colors, page, limit)
+    colorsService.findColors(page, pageSize, order)
+        .then(paginatedColors => {
             res.format({
                 json: () => {
                     return res.json(paginatedColors);
@@ -50,14 +26,13 @@ router.get('/', (req, res, next) => {
                     return res.send(js2xmlparser.parse('data', paginatedColors));
                 }
             });
-        })
-        .catch(error => {
-            console.error(error);
-           return res.status(500).json({
-               statusCode: 500,
-               message: "Internal Server Error",
-           });
+        }).catch(error => {
+        console.error(error);
+        return res.status(500).json({
+            statusCode: 500,
+            message: "Internal Server Error",
         });
+    });
 });
 
 router.get('/:id', (req, res, next) => {
@@ -151,7 +126,7 @@ router.put('/:id', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
     hasRole(req, res, next, ['administrator']);
 }, (req, res) => {
-    const id = req.param.id;
+    const id = req.params.id;
     Color.destroy({
         where: {
             id,
