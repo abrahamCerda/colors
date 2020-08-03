@@ -35,7 +35,7 @@ npm run start_debug
 ~~~
 ## API Usage
 All **"internal"** endpoints require a previous authentication ir order to obtain an *auth_token*.
-- Login: For simplicity, to get valid credentials please contact System Administrator to the mail: **abraham.cerdaiturra@gmail.com**.
+- **Login**: For simplicity, to get valid credentials please contact System Administrator to the mail: **abraham.cerdaiturra@gmail.com**.
 
 ~~~
 Request Method: POST
@@ -107,7 +107,7 @@ Example Response:
         "currentPage": 0
     }
 ~~~
-- Find colors from an external service: you can get the list of colors from an external service without login, that requires an api key. For simplicity, the api key can be configured in the enviroment variables. You can set the Accept header to application/xml in order to receive the result in xml format
+- **Find colors from an "external" service**: you can get the list of colors from an external service without login, that requires an api key. For simplicity, the api key can be configured in the enviroment variables. You can set the Accept header to application/xml in order to receive the result in xml format
 ~~~
 Request Headers:
     - X-API-KEY: <api-key>
@@ -164,7 +164,7 @@ Example Response:
         "currentPage": 0
     }
 ~~~
-- Find a color by id:
+- **Find a color by id**:
 ~~~
 Request Headers: 
     - Authorization: Bearer <auth_token>
@@ -190,7 +190,7 @@ Example Response:
         "deleted_at": null
     }
 ~~~
-- Create color: create a non-existing color
+- **Create color**: create a non-existing color
 ~~~
 Request Headers: 
     - Authorization: Bearer <auth_token>
@@ -223,7 +223,7 @@ Example Response:
         "deleted_at": null
     }
 ~~~
-- Edit Color: Edit an existing color:
+- **Edit Color**: Edit an existing color:
 ~~~
 Headers:
     - Authorization: Bearer <auth_token>
@@ -258,7 +258,7 @@ Example Response:
         "deleted_at": null
     }
 ~~~
-- Delete Color: delete an existing color
+- **Delete Color**: delete an existing color
 ~~~
 Request Headers:
     - Authorization: Bearer <auth_token>
