@@ -11,7 +11,7 @@ This project is an application that manage colors for a company. This app works 
 - Npm (Tested on version 6.14.x)
 - Postgres Database (Tested on version 12.3) 
 
-#Running
+## Running
 Clone the project and cd into the project root folder.
 ~~~
 git clone https://github.com/abrahamCerda/colors.git
