@@ -16,3 +16,5 @@ const authApiKeyMiddleware = (req, res, next) => {
     }
     next();
 };
+
+module.exports = authApiKeyMiddleware;

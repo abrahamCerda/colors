@@ -1,7 +1,8 @@
-#!/bin/bash
-source .env
-echo 'Running Migrations'
+#!/bin/sh
+echo "Running Migrations"
 npm run db:migrate
-echo 'Running Seeds'
-npm run db:seeds
-npm run start
+
+echo "Running Seeds"
+npm run db:seed
+
+npm run start:debug
