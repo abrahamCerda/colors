@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const authApiKeyMiddleware = require('../../../middlewares/auth-apikey-middleware');
+const ColorsService = require('../../../services/colors-service');
+const colorsService = new ColorsService();
+const js2xmlparser = require('js2xmlparser');
+
 
 router.get('/', authApiKeyMiddleware, (req, res) => {
     /* Apply pagination*/
