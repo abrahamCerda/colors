@@ -9,10 +9,9 @@ const passport = require('passport');
 const cors = require('cors');
 const sanitizeParams = require('./middlewares/sanitizer-middleware');
 
-const indexRouter = require('./controllers/index');
-const usersRouter = require('./controllers/users');
 const authRouter = require('./controllers/auth');
 const colorsRouter = require('./controllers/colors');
+const colorsApiRouter = require('./controllers/api/v1/colors');
 
 const app = express();
 
@@ -27,9 +26,8 @@ passport.use(jwtStrategy);
 app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/colors', colorsRouter);
+app.use('/api/v1/colors', colorsApiRouter);
 
 module.exports = app;
