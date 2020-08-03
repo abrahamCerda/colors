@@ -21,7 +21,11 @@ Install project dependencies
 ~~~
 npm run install
 ~~~
-Once you have database running, run database migrations
+Create .env file from the .env.example and replace with your enviroment values:
+~~~
+cp .env.example .env
+~~~
+Once you have database configurated and running, run database migrations
 ~~~
 npm run db:migrate
 ~~~ 
