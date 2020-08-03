@@ -38,6 +38,9 @@ All **"internal"** endpoints require a previous authentication ir order to obtai
 - **Login**: For simplicity, to get valid credentials please contact System Administrator to the mail: **abraham.cerdaiturra@gmail.com**.
 
 ~~~
+Request Headers:
+    - Accept: application/json
+
 Request Method: POST
 
 Path: /auth/login
@@ -48,6 +51,17 @@ Example Request Body:
     {
         "email": "email",
         "password": "password"
+    }
+
+Example Response:
+    {
+        "access_token": "<token>",
+        "id": 1,
+        "email": "<user_email>",
+        "role": {
+            "id": 1,
+            "name": "<user_role>"
+        }
     }
 ~~~
 - **Find colors:** Find colors by page index, page size and order.
